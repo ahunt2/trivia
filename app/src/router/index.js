@@ -1,12 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Login from '../views/Login.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '', // change later
+      path: '',
+      component: () => import('../views/HomeView.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('../components/question/QuestionDisplay.vue')
+        }
+      ]
+    },
+    {
+      path: '/login',
       component: () => import('../views/Login.vue')
+    },
+    {
+      path: '/signup',
+      component: () => import('../components/question/QuestionDisplay.vue')
     }
   ]
 })

@@ -1,10 +1,11 @@
 <script setup>
+import { RouterView } from 'vue-router';
 import TriviaHeader from '../components/layout/TriviaHeader.vue'
 </script>
 
 <template>
   <div class="w-screen">
     <trivia-header class="w-screen" />
-    <h1>Login</h1>
+    <router-view></router-view>
   </div>
 </template>

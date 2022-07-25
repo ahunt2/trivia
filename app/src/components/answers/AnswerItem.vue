@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps(['id', 'text'])
-const emit = definedEmits(['select-answer'])
+const emit = defineEmits(['select-answer'])
 
 function selectAnswer() {
   console.log(`selected: ${props.text}`)
@@ -9,7 +9,7 @@ function selectAnswer() {
 </script>
 
 <template>
-<div @click="selectAnswer">
+<div @click="selectAnswer()">
   <h2>{{ props.text }}</h2>
 </div>
 </template>
