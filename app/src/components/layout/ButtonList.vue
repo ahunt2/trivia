@@ -23,6 +23,6 @@ function newQuestion() {
 
 <style scoped>
 .btn-item {
-  @apply w-48 p-2 bg-red-600 border-2 rounded;
+  @apply w-48 p-2 bg-red-600 border-2 rounded-lg;
 }
 </style>

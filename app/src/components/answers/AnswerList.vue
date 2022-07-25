@@ -20,7 +20,7 @@ function selectAnswer(id) {
 
 <style scoped>
 .item {
-  @apply w-72 p-2 text-white bg-green-500 border-2 rounded;
+  @apply w-72 p-2 text-white bg-green-500 border-2 rounded-lg;
 }
 .selectedItem {
   color: blue;

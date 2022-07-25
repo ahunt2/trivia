@@ -3,7 +3,10 @@ import Score from '../layout/Score.vue'
 import QuestionItem from './QuestionItem.vue'
 import AnswerList from '../answers/AnswerList.vue'
 import ButtonList from '../layout/ButtonList.vue'
+import { onMounted } from 'vue'
+import { useQuestionStore } from '../../stores/question'
 
+const questionStore = useQuestionStore()
 const query = 'https://opentdb.com/api.php?amount=1&type=multiple'
 const answers = [
   { text: 'Answer 1' },
@@ -12,9 +15,9 @@ const answers = [
   { text: 'Answer 4' },
 ]
 
-function getQuestion() {
-  
-}
+onMounted(() => {
+  questionStore.loadNewQuestion()
+})
 </script>
 
 <template>
@@ -25,7 +28,7 @@ function getQuestion() {
 
     <div class="space-y-6 text-lg">
       <div class="container place-items-center bg-blue-400 text-center">
-        <question-item :text="'This is a question'" />
+        <question-item :text="questionStore.question" />
       </div>
 
       <div class="container mx-auto bg-green-400 text-center">
