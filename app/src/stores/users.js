@@ -18,6 +18,18 @@ export const useUserStore = defineStore({
   actions: {
     setAuthentication(value) {
       this.isAuthenticated = value
+    },
+
+    incrementScore(value) {
+      this.score += value
+    },
+
+    incrementCorrect() {
+      this.totalCorrect++
+    },
+
+    incrementIncorrect() {
+      this.totalIncorrect++
     }
   }
 })

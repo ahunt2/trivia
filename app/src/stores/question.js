@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { randomize } from '../../utils/randomize'
 import { decodeString } from '../../utils/decodeString'
+import { useUserStore } from './users'
 
 export const useQuestionStore = defineStore({
   id: 'question',
@@ -36,6 +37,14 @@ export const useQuestionStore = defineStore({
       this.correct = decodeString(data.correct_answer)
       this.question = decodeString(data.question)
       this.difficulty = difficulty
+    },
+
+    async incrementScore() {
+      const user = useUserStore
+      const value = this.difficulty * 10
+
+      user.incrementScore(value)
+      user.incrementCorrect()
     }
   }
 })
