@@ -2,6 +2,8 @@ const { ObjectId } = require('bson')
 const express = require('express')
 const router = express.Router()
 const client = require('../mongo')
+const bcrypt = require('bcrypt')
+const saltRounds = 10 
 
 // user {
 //     _id,
@@ -13,7 +15,7 @@ const client = require('../mongo')
 //     incorrectAnswers
 // }
 
-router.route('/users')
+router.route('/api/users')
   
   // get users (test)
   .get(async (req, res) => {
@@ -39,13 +41,19 @@ router.route('/users')
     if (await check) {
       res.status(400).json({ msg: 'Username taken.' })
     } else {
-      user = await collection.insertOne({
-        username: req.body.username,
-        email: req.body.username,
-        password: req.body.password,
-        score: 0,
-        totalCorrect: 0,
-        totalIncorrect: 0
+      const username = req.body.username
+      const email = req.body.email
+      let password = req.body.password
+
+      bcrypt.hash(password, saltRounds, (err, hash) => {
+        user = await collection.insertOne({
+          username,
+          email,
+          password: hash,
+          score: 0,
+          totalCorrect: 0,
+          totalIncorrect: 0
+        })
       })
     }
     
@@ -53,7 +61,7 @@ router.route('/users')
     return client.close()
   })
 
-router.route('/users/:id')
+router.route('/api/users/:id')
 
 /**
  * Get a user by id

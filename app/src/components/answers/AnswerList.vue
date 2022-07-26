@@ -3,26 +3,33 @@ import { ref } from 'vue'
 import AnswerItem from './AnswerItem.vue'
 
 const props = defineProps(['answers'])
+const emit = defineEmits(['select-answer'])
 const selected = ref('')
 
 console.log(props.answers)
 
-function selectAnswer(id) {
-  console.log(`emit select-answer ${id}`)
+function selectAnswer(text) {
+  selected.value = text
+  emit('select-answer', text)
 }
 </script>
 
 <template>
 <div class="space-y-4 container">
-  <AnswerItem class="item container" :class="{ selectedItem: selected === answer.text }" v-for="answer in props.answers" :key="answer.text" :id="answer.text" :text="answer.text" @select-answer="(id) => selectAnswer(id)" />
+  <AnswerItem class="item container" :class="{ selectedItem: selected === answer }" v-for="(answer, index) in props.answers" :key="index" :id="index" :text="answer" @select-answer="(text) => selectAnswer(text)" />
 </div>
 </template>
 
 <style scoped>
 .item {
-  @apply w-72 p-2 text-white bg-green-500 border-2 rounded-lg;
+  @apply w-72 p-2 border-2 rounded-lg;
+}
+
+.item:hover {
+  cursor: pointer;
+  @apply font-semibold border-4;
 }
 .selectedItem {
-  color: blue;
+  @apply bg-sky-400 text-zinc-800 font-semibold;
 }
 </style>

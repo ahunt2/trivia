@@ -1,17 +1,17 @@
 <script setup>
-const emit = defineEmits(['new-question'])
+const emit = defineEmits(['new-question', 'submit'])
 
 function submit() {
-  console.log('submit')
+  emit('submit-answer')
 }
 
 function newQuestion() {
-  console.log('new question')
+  emit('new-question')
 }
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div class="absolute bottom-6 container space-y-4">
     <div class="btn-item container">
       <button @click="submit()">Submit</button>
     </div>
@@ -23,6 +23,11 @@ function newQuestion() {
 
 <style scoped>
 .btn-item {
-  @apply w-48 p-2 bg-red-600 border-2 rounded-lg;
+  @apply w-48 p-2 border-2 rounded-lg;
+}
+
+.btn-item:hover {
+  cursor: pointer;
+  @apply font-semibold text-sky-400 border-sky-400;
 }
 </style>

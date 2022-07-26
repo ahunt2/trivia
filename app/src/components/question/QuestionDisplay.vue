@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue'
 import Score from '../layout/Score.vue'
 import QuestionItem from './QuestionItem.vue'
 import AnswerList from '../answers/AnswerList.vue'
@@ -7,17 +8,23 @@ import { onMounted } from 'vue'
 import { useQuestionStore } from '../../stores/question'
 
 const questionStore = useQuestionStore()
-const query = 'https://opentdb.com/api.php?amount=1&type=multiple'
-const answers = [
-  { text: 'Answer 1' },
-  { text: 'Answer 2' },
-  { text: 'Answer 3' },
-  { text: 'Answer 4' },
-]
+const selected = ref('')
 
 onMounted(() => {
   questionStore.loadNewQuestion()
 })
+
+function selectAnswer(text) {
+  selected.value = text
+}
+
+function submitAnswer() {
+  if (selected.value === questionStore.correct) {
+    console.log('correct')
+  } else {
+    console.log('incorrect')
+  }
+}
 </script>
 
 <template>
@@ -27,16 +34,16 @@ onMounted(() => {
     </div>
 
     <div class="space-y-6 text-lg">
-      <div class="container place-items-center bg-blue-400 text-center">
+      <div class="container text-center">
         <question-item :text="questionStore.question" />
       </div>
 
-      <div class="container mx-auto bg-green-400 text-center">
-        <answer-list :answers="answers" />
+      <div class="container text-center">
+        <answer-list :answers="questionStore.answers" @select-answer="(text) => selectAnswer(text)" />
       </div>
 
-      <div class="container bg-red-400 text-center">
-        <button-list></button-list>
+      <div class="container text-center">
+        <button-list @submit-answer="submitAnswer()" @new-question="questionStore.loadNewQuestion()"></button-list>
       </div>
     </div>
 

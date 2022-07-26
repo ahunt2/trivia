@@ -4,7 +4,7 @@ const emit = defineEmits(['select-answer'])
 
 function selectAnswer() {
   console.log(`selected: ${props.text}`)
-  emit('select-answer', props.id)
+  emit('select-answer', props.text)
 }
 </script>
 

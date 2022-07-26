@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { randomize } from '../../utils/randomize'
+import { decodeString } from '../../utils/decodeString'
 
 export const useQuestionStore = defineStore({
   id: 'question',
@@ -28,10 +29,12 @@ export const useQuestionStore = defineStore({
       } else {
         difficulty = 3
       }
+      
+      answers.forEach(el => decodeString(el))
 
       this.answers = answers
-      this.correct = data.correct_answer
-      this.question = data.question
+      this.correct = decodeString(data.correct_answer)
+      this.question = decodeString(data.question)
       this.difficulty = difficulty
     }
   }

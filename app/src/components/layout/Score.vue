@@ -1,8 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useUserStore } from '../../stores/users'
-import AnimatedNumber from 'animated-number-vue'
-import VueNumber from 'vue-number-animation'
 
 const userStore = useUserStore()
 // const score = computed(() => userStore.score)
@@ -25,7 +23,6 @@ function scoreChange() {
 <template>
   <div class="score">
     <h2>Score: <span :class="{ 'fade-in': fadeIn, 'fade-out': !fadeIn }">{{ score }}</span></h2>
-    <button @click="incrementScore()">Inc</button>
   </div>
 </template>
 
