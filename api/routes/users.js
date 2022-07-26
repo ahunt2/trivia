@@ -36,28 +36,30 @@ router.route('/api/users')
     await client.connect()
     const collection = await client.db('trivia').collection('users')
 
-    const check = await collection.findOne({ username: ObjectId(req.body.username) })
-    let user
+    // TODO: only allow one account per email
+    // TODO: lowercase email
+    const check = await collection.findOne({ username: req.body.username })
     if (await check) {
       res.status(400).json({ msg: 'Username taken.' })
-    } else {
-      const username = req.body.username
-      const email = req.body.email
-      let password = req.body.password
-
-      bcrypt.hash(password, saltRounds, (err, hash) => {
-        user = await collection.insertOne({
-          username,
-          email,
-          password: hash,
-          score: 0,
-          totalCorrect: 0,
-          totalIncorrect: 0
-        })
-      })
+      return client.close()
     }
+      
+    const username = req.body.username
+    const email = req.body.email
+    let password = req.body.password
+
+    password = await bcrypt.hash(password, saltRounds)
+
+    const result = await collection.insertOne({
+      username,
+      email,
+      password: await password,
+      score: 0,
+      totalCorrect: 0,
+      totalIncorrect: 0
+    })
     
-    res.status(200).send(user)
+    res.status(200).json({ id: await result.insertedId })
     return client.close()
   })
 
@@ -89,14 +91,15 @@ router.route('/api/users/:id')
   const collection = await client.db('trivia').collection('users')
   const result = await collection.findOneAndDelete({ _id: ObjectId(req.params.id) })
 
-  res.status(200).json({ msg: 'User removed.' })
+  // TODO: check for successful delete
+  res.status(200).send(await result)
   return client.close()
 })
 
 /**
  * Update a user
  * @param id
- * @body user
+ * @body user should include score, totalCorrect, and totalIncorrect increment values
  */
 .put(async (req, res) => {
   await client.connect()
