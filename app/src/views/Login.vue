@@ -1,13 +1,36 @@
 <script setup>
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useUserStore } from '../stores/users'
 import TriviaHeader from '../components/layout/TriviaHeader.vue'
+import axios from 'axios'
 
-function submit() {
+const userStore = useUserStore()
+const username = ref('')
+const password = ref('')
+
+async function submit() {
+  // TODO: set up validation
   console.log('submit')
+  const data = JSON.stringify({ username: username.value, password: password.value })
+
+  const res = await axios.post('http://localhost:3001/api/login', {
+    username: username.value,
+    password: password.value
+  })
+
+  await res
+  console.log(res)
+  if ( res.error ) {
+    console.error(res.error)
+  } else {
+    userStore.loadUser(res.body)
+  }
 }
 
 function cancel() {
-  console.log('cancel')
+  username.value = ''
+  password.value = ''
 }
 </script>
 

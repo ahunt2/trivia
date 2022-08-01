@@ -1,6 +1,13 @@
 <script setup>
-import { RouterLink } from 'vue-router';
+import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import TriviaHeader from '../components/layout/TriviaHeader.vue'
+import axios from 'axios'
+
+const usernam = ref('')
+const email = ref('')
+const password = ref('')
+const confirmPassword = ref('')
 
 function submit() {
   console.log('submit')
@@ -22,7 +29,7 @@ function cancel() {
             <h2>USERNAME</h2>
           </div>
           <div> 
-            <input class="form-input" type="text" placeholder="Enter username..." />
+            <input v-model="username" class="form-input" type="text" placeholder="Enter username..." />
           </div>
         </div>
 
@@ -31,7 +38,7 @@ function cancel() {
             <h2>EMAIL</h2>
           </div>
           <div> 
-            <input class="form-input" type="email" placeholder="Enter email..." />
+            <input v-model="email" class="form-input" type="email" placeholder="Enter email..." />
           </div>
         </div>
 
@@ -40,7 +47,7 @@ function cancel() {
             <h2>PASSWORD</h2>
           </div>
           <div> 
-            <input class="form-input" type="password" />
+            <input v-model="password" class="form-input" type="password" />
           </div>
         </div>
 
@@ -49,7 +56,7 @@ function cancel() {
             <h2>CONFIRM PASSWORD</h2>
           </div>
           <div> 
-            <input class="form-input" type="password" />
+            <input v-model="confirmPassword" class="form-input" type="password" />
           </div>
         </div>
 

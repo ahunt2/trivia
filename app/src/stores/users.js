@@ -30,6 +30,15 @@ export const useUserStore = defineStore({
 
     incrementIncorrect() {
       this.totalIncorrect++
+    },
+
+    loadUser(user) {
+      this.isAuthenticated = true
+      this.id = user.id
+      this.username = user.username
+      this.score = user.score
+      this.totalCorrect = user.totalCorrect
+      this.totalIncorrect = user.totalIncorrect
     }
   }
 })

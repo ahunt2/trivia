@@ -24,6 +24,6 @@ import TriviaHeader from './components/layout/TriviaHeader.vue'
 }
 
 .form-input {
-  @apply w-80 rounded py-1 px-2;
+  @apply w-80 rounded py-1 px-2 text-black;
 }
 </style>

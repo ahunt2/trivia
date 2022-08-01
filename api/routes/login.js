@@ -13,24 +13,34 @@ router.route('/api/login')
    */
   .post(async (req, res) => {
     // TODO: separate auth functionality
+    console.log(req)
+
     const username = req.body.username
     let password = req.body.password
 
     await client.connect()
     const collection = await client.db('trivia').collection('users')
-    const user = await collection.findOne({ username })
+    const user = await collection.findOne({ username: username })
     await user
 
-    if (!user) {
-      res.status(203).json({ msg: 'username not found' })
-      return client.close()
-    }
+    // if (!user) {
+    //   res.status(203).json({ msg: 'username not found' })
+    //   return client.close()
+    // }
+
+    console.log(await user)
 
     await bcrypt.compare(password, user.password, (err, result) => {
       if (result) {
         // login user
         // TODO: sign jwt
-        res.status(203).json({ msg: 'login successful' })
+        res.status(203).json({ 
+          id: user._id,
+          username: user.username,
+          score: user.score,
+          totalCorrect: user.totalCorrect,
+          totalIncorrect: user.totalIncorrect
+         })
         return client.close()
       } else {
         // login unsuccessful
