@@ -1,3 +1,8 @@
-module.exports.loginUser = function (req, res, next) {
-  res.send('login user')
+module.exports.loginUser = (req, res, next) => {
+  res.send(res.hello)
+  console.log(res.hello)
+}
+
+module.exports.logout = (req, res, next) => {
+  res.send('logout')
 }

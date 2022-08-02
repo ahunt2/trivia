@@ -1,10 +1,6 @@
 const mongoose = require('mongoose')
 
 const UserSchema = mongoose.Schema({
-  _id: {
-    type: mongoose.Types.ObjectId,
-    required: true
-  },
   username: {
     type: String,
     required: true,
@@ -13,7 +9,11 @@ const UserSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: [true, 'Email already in use']
+    unique: [true, 'Email already in use'],
+    match: [
+      '/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/',
+      'Please enter a valid email'
+    ]
   },
   score: {
     type: Number,

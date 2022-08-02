@@ -5,10 +5,11 @@ const client = require('../mongo')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 const { loginUser } = require('../controllers/login')
+const { test } = require('../middleware/test')
 
 router
   .route('/login')
-  .post(loginUser)
+  .post(test, loginUser)
 
 router  
   .route('/logout')
