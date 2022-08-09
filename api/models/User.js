@@ -15,6 +15,12 @@ const UserSchema = mongoose.Schema({
       'Please enter a valid email'
     ]
   },
+  password: {
+    type: String,
+    required: [true, 'Please add a password'],
+    minLength: 6,
+    select: false
+  },
   score: {
     type: Number,
     default: 0
@@ -27,6 +33,8 @@ const UserSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
   created: {
     type: Date,
     default: Date.now()
