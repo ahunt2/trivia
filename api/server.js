@@ -4,7 +4,7 @@ const { connectDB } = require('./connection/config')
 const cors = require('cors')
 
 // Connect Database
-connectDB()
+// connectDB()
 
 const users = require('./routes/users')
 const auth = require('./routes/auth')

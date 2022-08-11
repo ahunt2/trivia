@@ -1,29 +1,41 @@
 
 /**
- * @desc Create a user
+ * @desc    Create a user
+ * @route   POST /api/users
  */
-module.exports.createUser = (req, res, next) => {
+exports.createUser = (req, res, next) => {
   res.send('create user')
 }
 
 /**
- * @desc Get a user
+ * @desc    Get a user
+ * @route   GET /api/users/:id
  */
-module.exports.getUser = (req, res, next) => {
+exports.getUser = (req, res, next) => {
   res.send('get user')
 }
 
 /**
- * @desc Update a user
+ * @desc    Get users
+ * @route   GET /api/users
  */
-module.exports.updateUser = (req, res, next) => {
+exports.getUsers = (req, res, next) => {
+  res.send('get users')
+}
+
+/**
+ * @desc    Update a user
+ * @route   PUT /api/users/:id
+ */
+exports.updateUser = (req, res, next) => {
   res.send('update user')
 }
 
 /**
- * @desc Delete a user from database
+ * @desc    Delete a user from database
+ * @route   DELETE /api/users/:id
  */
-module.exports.deleteUser = (req, res, next) => {
+exports.deleteUser = (req, res, next) => {
   res.send('delete user')
 }
 
