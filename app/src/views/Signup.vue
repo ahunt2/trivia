@@ -1,20 +1,42 @@
 <script setup>
 import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import TriviaHeader from '../components/layout/TriviaHeader.vue'
 import axios from 'axios'
 
-const usernam = ref('')
+const router = useRouter()
+
+const username = ref('')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 
-function submit() {
-  console.log('submit')
+async function submit() {
+  if (!validate()) return
+
+  const result = await axios.post('http://localhost:3001/api/auth/register', {
+    username: username.value,
+    email: email.value,
+    password: password.value
+  })
+
+  if (result) {
+    console.log(result)
+    $cookies.set('token', result.data.token)
+    router.push('/')
+  }
 }
 
 function cancel() {
   console.log('cancel')
+}
+
+function validate() {
+  if (!username.value) return false
+  if (!email.value) return false
+  if (!password.value || password.value.length < 6) return false
+  if (confirmPassword.value !== password.value) return false
+  return true
 }
 </script>
 

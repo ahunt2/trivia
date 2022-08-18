@@ -5,12 +5,9 @@ async function loadNewQuestion() {
 
   await res
   const data = res.data.results[0]
-  console.log(data)
   let answers = data.incorrect_answers
   answers = [...answers, data.correct_answer]
-  console.log(answers)
   randomize(answers)
-  console.log(answers)
 }
 
 function randomize(array) {

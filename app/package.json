@@ -14,10 +14,13 @@
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "axios": "^0.27.2",
     "eslint": "^8.20.0",
+    "floating-vue": "^2.0.0-beta.19",
     "jsonwebtoken": "^8.5.1",
     "pinia": "^2.0.16",
     "url": "^0.11.0",
     "vue": "^3.2.37",
+    "vue-context": "^6.0.0",
+    "vue-cookies": "^1.8.1",
     "vue-router": "^4.1.2"
   },
   "devDependencies": {

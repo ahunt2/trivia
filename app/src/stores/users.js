@@ -39,6 +39,10 @@ export const useUserStore = defineStore({
       this.score = user.score
       this.totalCorrect = user.totalCorrect
       this.totalIncorrect = user.totalIncorrect
+    },
+
+    signout() {
+      $cookies.remove('token')
     }
   }
 })

@@ -13,6 +13,6 @@ router
 
 router
   .route('/me')
-  .post(protect, getMe)
+  .get(protect, getMe)
 
 module.exports = router

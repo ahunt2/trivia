@@ -1,31 +1,38 @@
 <script setup>
 import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { useUserStore } from '../stores/users'
 import TriviaHeader from '../components/layout/TriviaHeader.vue'
 import axios from 'axios'
 
+const router = useRouter()
 const userStore = useUserStore()
 const username = ref('')
 const password = ref('')
 
 async function submit() {
   // TODO: set up validation
-  console.log('submit')
-  const data = JSON.stringify({ username: username.value, password: password.value })
 
-  const res = await axios.post('http://localhost:3001/api/login', {
+  console.log(username.value)
+  console.log(password.value)
+
+  const res = await axios.post('http://localhost:3001/api/auth/login', {
     username: username.value,
     password: password.value
   })
 
-  await res
-  console.log(res)
-  if ( res.error ) {
-    console.error(res.error)
-  } else {
-    userStore.loadUser(res.body)
+  if (res && res.data.token) {
+    console.log('set token')
+    $cookies.set('token', res.data.token)
+    router.push('/')
   }
+  
+  
+  // if ( res.error ) {
+  //   console.error(res.error)
+  // } else {
+  //   userStore.loadUser(res.body)
+  // }
 }
 
 function cancel() {
@@ -45,7 +52,7 @@ function cancel() {
             <h2>USERNAME</h2>
           </div>
           <div> 
-            <input class="form-input" type="text" placeholder="Enter username..." />
+            <input v-model="username" class="form-input" type="text" placeholder="Enter username..." />
           </div>
         </div>
 
@@ -54,7 +61,7 @@ function cancel() {
             <h2>PASSWORD</h2>
           </div>
           <div> 
-            <input class="form-input" type="password" />
+            <input v-model="password" class="form-input" type="password" />
           </div>
         </div>
 

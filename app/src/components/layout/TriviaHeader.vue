@@ -1,10 +1,23 @@
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '../../stores/users'
+import TheMenu from './TheMenu.vue'
+
+const user = useUserStore()
+const router = useRouter()
+
+// function signout() {
+//   user.signout()
+//   router.push('/login')
+// }
+</script>
+
 <template>
   <div class="header">
     <h1 class="header-text">Trivia</h1>
     <div class="header-btn">
-      <button>
-        <font-awesome-icon class="fa-xl" icon="fa-solid fa-bars" />
-      </button>
+      <the-menu />
     </div>
   </div>
 </template>
@@ -19,6 +32,6 @@
 }
 
 .header-btn {
-  @apply absolute h-auto right-6;
+  @apply absolute h-auto right-0;
 }
 </style>

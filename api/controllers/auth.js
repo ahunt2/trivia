@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const jwt = require('jsonwebtoken')
 
 /**
  * @desc    Register user
@@ -77,7 +78,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken()
 
   const options = {
-    expires: new Date(Date.now() * 24 * 60 * 60 * 1000),
+    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
     httpOnly: true
   }
 

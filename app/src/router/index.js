@@ -10,8 +10,21 @@ const router = createRouter({
         {
           path: '',
           component: () => import('../components/question/QuestionDisplay.vue')
+        },
+        {
+          path: '/profile',
+          component: () => import('../views/ProfileView.vue')
+        },
+        {
+          path: '/leaderboard',
+          component: () => import('../views/LeaderboardView.vue')
         }
-      ]
+      ],
+      beforeEnter: (to, from) => {
+        if (!$cookies.get('token')) {
+          return '/login'
+        }
+      }
     },
     {
       path: '/login',
