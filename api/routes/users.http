@@ -1,6 +1,0 @@
-# For testing routes using REST client
-GET http://localhost:3001/api/users
-
-###
-
-GET http://localhost:3001/api/users/123456
