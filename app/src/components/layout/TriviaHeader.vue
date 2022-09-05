@@ -17,7 +17,7 @@ function toggleMenu() {
 </script>
 
 <template>
-  <div>
+  <div class="overflow-hidden overscroll-none">
     <div class="header">
       <h1 class="header-text">Trivia</h1>
       <!-- <div class="header-btn" @click="toggleMenu" v-if="props.menu">

@@ -9,8 +9,12 @@ import { RouterView } from 'vue-router'
 </template>
 
 <style lang="postcss">
+body {
+  @apply overflow-hidden overscroll-none;
+}
+
 .app {
-  @apply w-screen h-screen min-w-[320px] bg-stone-900 text-zinc-300;
+  @apply w-screen h-screen min-w-[320px] bg-stone-900 text-zinc-300 overflow-hidden overscroll-none;
 }
 
 .form {

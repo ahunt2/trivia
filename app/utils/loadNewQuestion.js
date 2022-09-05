@@ -1,4 +1,5 @@
 const axios = require('axios')
+const decodeString = require('./decodeString')
 
 async function loadNewQuestion() {
   const res = await axios.get('https://opentdb.com/api.php?amount=1&type=multiple')
@@ -7,6 +8,8 @@ async function loadNewQuestion() {
   const data = res.data.results[0]
   let answers = data.incorrect_answers
   answers = [...answers, data.correct_answer]
+
+  answers = answers.forEach((answer) => decodeString(answer))
   randomize(answers)
 }
 
