@@ -34,6 +34,13 @@ function switchView(view) {
     </div>
    </div>
    <divider />
+   <div class="menu-item" @click="switchView('/stats')">
+    <div class="item-group">
+      <font-awesome-icon icon="fa-solid fa-chart-simple" class="w-12" />
+      <h1>Stats</h1>
+    </div>
+   </div>
+   <divider />
    <div class="menu-item" @click="switchView('/leaderboard')">
     <div class="item-group">
       <font-awesome-icon icon="fa-solid fa-trophy" class="w-12" />

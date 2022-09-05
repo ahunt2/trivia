@@ -1,5 +1,11 @@
 <script setup>
 import { RouterView } from 'vue-router'
+
+// TODO: check answer
+// TODO: submit answer -> disable submit button
+// TODO: [layout] profile & style
+// TODO: [layout] leaderboard & style
+// TODO: stats page?
 </script>
 
 <template>
