@@ -4,8 +4,8 @@ import TriviaHeader from '../components/layout/TriviaHeader.vue'
 </script>
 
 <template>
-  <div class="w-screen">
-    <trivia-header class="w-screen" />
-    <router-view></router-view>
+  <div class="w-screen" scroll="no">
+    <trivia-header :menu="true" />
+    <router-view scroll="no"></router-view>
   </div>
 </template>

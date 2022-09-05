@@ -20,11 +20,11 @@ const router = createRouter({
           component: () => import('../views/LeaderboardView.vue')
         }
       ],
-      beforeEnter: (to, from) => {
-        if (!$cookies.get('token')) {
-          return '/login'
-        }
-      }
+      // beforeEnter: (to, from) => {
+      //   if (!$cookies.get('token')) {
+      //     return '/login'
+      //   }
+      // }
     },
     {
       path: '/login',

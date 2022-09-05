@@ -11,7 +11,7 @@ function newQuestion() {
 </script>
 
 <template>
-  <div class="absolute bottom-6 container space-y-4">
+  <div class="absolute bottom-24 container space-y-4">
     <div class="btn-item container">
       <button @click="submit()">Submit</button>
     </div>
@@ -21,7 +21,7 @@ function newQuestion() {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .btn-item {
   @apply w-48 p-2 border-2 rounded-lg;
 }
