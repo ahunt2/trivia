@@ -16,12 +16,12 @@ function toggleMenu() {
 }
 </script>
 
-<template>
+<template></template>
   <div class="overflow-hidden overscroll-none">
-    <div class="header">
-      <h1 class="header-text">Trivia</h1>
+  <div class="header">
+    <h1 class="header-text">Trivia</h1>
       <!-- <div class="header-btn" @click="toggleMenu" v-if="props.menu">
-        <the-menu />
+      <the-menu />
       </div> -->
       <button @click="toggleMenu()" class="pr-6 header-btn" v-if="props.menu">
         <font-awesome-icon class="fa-xl" icon="fa-solid fa-bars" />
