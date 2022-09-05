@@ -1,21 +1,29 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import TriviaHeader from './components/layout/TriviaHeader.vue'
+import { RouterView } from 'vue-router'
+
+// TODO: check answer
+// TODO: submit answer -> disable submit button
+// TODO: [layout] profile & style
+// TODO: [layout] leaderboard & style
+// TODO: stats page?
 </script>
 
 <template>
   <div class="app">
-    <router-view class="w-screen" />
+    <router-view class="w-screen h-screen absolute top-0" />
   </div>
 </template>
 
-<style>
+<style lang="postcss">
+body {
+  @apply overflow-hidden overscroll-none;
+}
+
 .app {
-  @apply w-screen h-screen min-w-[320px] bg-stone-900 text-zinc-300;
+  @apply w-screen h-screen min-w-[320px] bg-stone-900 text-zinc-300 overflow-hidden overscroll-none;
 }
 
 .form {
-  /* @apply container w-96 rounded-xl border-2 p-3 my-8 space-y-4; */
   @apply container w-96 rounded-xl p-3 my-8 space-y-4;
 }
 

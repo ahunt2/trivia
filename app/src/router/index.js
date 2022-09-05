@@ -16,15 +16,19 @@ const router = createRouter({
           component: () => import('../views/ProfileView.vue')
         },
         {
+          path: '/stats',
+          component: () => import('../components/pages/StatsPage.vue')
+        },
+        {
           path: '/leaderboard',
           component: () => import('../views/LeaderboardView.vue')
         }
       ],
-      beforeEnter: (to, from) => {
-        if (!$cookies.get('token')) {
-          return '/login'
-        }
-      }
+      // beforeEnter: (to, from) => {
+      //   if (!$cookies.get('token')) {
+      //     return '/login'
+      //   }
+      // }
     },
     {
       path: '/login',

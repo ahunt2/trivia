@@ -28,12 +28,12 @@ function submitAnswer() {
 </script>
 
 <template>
-  <div>
+  <div class="display">
     <div>
       <score />
     </div>
 
-    <div class="space-y-6 text-lg">
+    <div class="questions">
       <div class="container text-center">
         <question-item :text="questionStore.question" />
       </div>
@@ -49,3 +49,17 @@ function submitAnswer() {
 
   </div>
 </template>
+
+<style scoped lang="postcss">
+  .display {
+    @apply absolute top-14 w-screen h-full;
+  }
+
+  .questions {
+    @apply space-y-6 text-lg;
+  }
+
+  .buttons {
+    @apply container text-center;
+  }
+</style>
