@@ -13,17 +13,21 @@ const percentage = computed(() => {
 
 <template>
   <div class="display">
-    <div class="grid grid-cols-2 gap-4 container">
-      <h1>Total Questions Answered:</h1>
+    <div class="mt-12">
+      <h1 class="text-2xl font-semibold">Stats</h1>
+    </div>
+
+    <div class="grid grid-cols-3 gap-12 container">
+      <h1 class="col-span-2">Questions Answered:</h1>
       <h1>{{ totalQuestions }}</h1>
 
-      <h1>Correct Guesses:</h1>
+      <h1 class="col-span-2">Correct Guesses:</h1>
       <h1>{{ correct }}</h1>
 
-      <h1>Incorrect Guesses:</h1>
+      <h1 class="col-span-2">Incorrect Guesses:</h1>
       <h1>{{ incorrect }}</h1>
 
-      <h1>Correct Rate:</h1>
+      <h1 class="col-span-2">Correct Rate:</h1>
       <h1>{{ percentage }}%</h1>
 
       </div>
@@ -32,10 +36,10 @@ const percentage = computed(() => {
 
 <style scoped lang="postcss">
 .display {
-  @apply absolute top-14 w-screen;
+  @apply absolute top-14 w-screen px-8;
 }
 
 .grid {
-  @apply py-12;
+  @apply py-12 text-lg font-semibold;
 }
 </style>

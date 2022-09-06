@@ -56,7 +56,7 @@ function submitAnswer() {
   }
 
   .questions {
-    @apply space-y-6 text-lg;
+    @apply space-y-6 text-lg mt-8;
   }
 
   .buttons {

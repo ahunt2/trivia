@@ -21,7 +21,7 @@ const router = createRouter({
         },
         {
           path: '/leaderboard',
-          component: () => import('../views/LeaderboardView.vue')
+          component: () => import('../components/pages/LeaderboardPage.vue')
         }
       ],
       // beforeEnter: (to, from) => {

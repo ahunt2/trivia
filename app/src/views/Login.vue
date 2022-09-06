@@ -46,7 +46,7 @@ function cancel() {
     <trivia-header :menu="false" />
     <div class="display">
       <div class="content">
-        <h1 class="text-2xl font-semibold">Login</h1>
+        <h1 class="text-2xl font-semibold pl-6">Login</h1>
         <div class="form-group">
           <div> 
             <h2>USERNAME</h2>
