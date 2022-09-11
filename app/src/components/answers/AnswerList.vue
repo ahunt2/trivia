@@ -1,14 +1,12 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useQuestionStore } from '../../stores/question';
 import AnswerItem from './AnswerItem.vue'
 
 const question = useQuestionStore()
-const props = defineProps(['answers', 'disableAnswers'])
+const props = defineProps(['answers'])
 const emit = defineEmits(['select-answer'])
 const selected = ref('')
-
-console.log(props.answers)
 
 function selectAnswer(text) {
   selected.value = text

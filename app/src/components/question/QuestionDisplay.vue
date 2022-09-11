@@ -25,6 +25,7 @@ function submit() {
   questions.setSelected(selected.value)
   questions.setAnswered(true)
 
+  // TODO: take out after testing is done
   if (selected.value === questions.correct) {
     console.log('correct')
   } else {
@@ -35,6 +36,7 @@ function submit() {
 function getNewQuestion() {
   questions.loadNewQuestion()
   questions.setAnswered(false)
+  questions.setSelected('')
 }
 </script>
 
