@@ -16,9 +16,13 @@ onMounted(() => {
 
 function selectAnswer(text) {
   selected.value = text
+  questions.setSelected(selected.value)
 }
 
 function submit() {
+  if (questions.selected === '') return
+
+  questions.setSelected(selected.value)
   questions.setAnswered(true)
 
   if (selected.value === questions.correct) {
@@ -51,13 +55,9 @@ function getNewQuestion() {
 
       <div class="container text-center">
         <!-- <button-list @submit-answer="submitAnswer()" @new-question="questionStore.loadNewQuestion()"></button-list> -->
-        <div class="absolute bottom-24 container space-y-4">
-          <div class="btn-item container">
-            <button @click="submit()" :disabled="questions.answered">Submit</button>
-          </div>
-          <div class="btn-item container">
-            <button @click="getNewQuestion()">New Question</button>
-          </div>
+        <div class="btn-container">
+            <button @click="submit()" :disabled="questions.answered" class="btn">Submit</button>
+            <button @click="getNewQuestion()" class="btn">New Question</button>
         </div>
       </div>
     </div>
@@ -80,5 +80,13 @@ function getNewQuestion() {
 
   .btn-item {
     @apply w-48 p-2 border-2 rounded-lg;
+  }
+
+  .btn {
+    @apply w-48 p-2 border-2 rounded-lg;
+  }
+
+  .btn-container {
+    @apply absolute bottom-24 container space-y-4;
   }
 </style>

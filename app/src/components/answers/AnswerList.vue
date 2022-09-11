@@ -29,7 +29,7 @@ function selectAnswer(text) {
 
 .item:hover {
   cursor: pointer;
-  @apply font-semibold border-4;
+  /* @apply font-semibold border-4; */
 }
 .selectedItem {
   @apply bg-sky-400 text-zinc-800 font-semibold;
