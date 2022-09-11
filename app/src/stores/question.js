@@ -10,7 +10,8 @@ export const useQuestionStore = defineStore({
     question: '',
     correct: '',
     answers: [],
-    difficulty: 0
+    difficulty: 0,
+    answered: false
   }),
   actions: {
     async loadNewQuestion() {
@@ -45,6 +46,10 @@ export const useQuestionStore = defineStore({
 
       user.incrementScore(value)
       user.incrementCorrect()
+    },
+
+    setAnswered(value) {
+      this.answered = value
     }
   }
 })

@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue'
+import { useQuestionStore } from '../../stores/question';
 import AnswerItem from './AnswerItem.vue'
 
-const props = defineProps(['answers'])
+const question = useQuestionStore()
+const props = defineProps(['answers', 'disableAnswers'])
 const emit = defineEmits(['select-answer'])
 const selected = ref('')
 
@@ -16,7 +18,7 @@ function selectAnswer(text) {
 
 <template>
 <div class="space-y-4 container">
-  <AnswerItem class="item container" :class="{ selectedItem: selected === answer }" v-for="(answer, index) in props.answers" :key="index" :id="index" :text="answer" @select-answer="(text) => selectAnswer(text)" />
+  <AnswerItem :disabled="question.answered" class="item container" :class="{ selectedItem: selected === answer }" v-for="(answer, index) in props.answers" :key="index" :id="index" :text="answer" @select-answer="(text) => selectAnswer(text)" />
 </div>
 </template>
 
