@@ -108,6 +108,6 @@ function validate() {
   }
 
   .content {
-    @apply w-96 mx-auto space-y-12;
+    @apply w-96 mx-auto space-y-8;
   }
 </style>

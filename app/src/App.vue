@@ -3,9 +3,12 @@ import { RouterView } from 'vue-router'
 
 // TODO: check answer
 // TODO: submit answer -> disable submit button
-// TODO: [layout] profile & style
-// TODO: [layout] leaderboard & style
-// TODO: stats page?
+// TODO: [styles] right/wrong answer
+// TODO: [functionality] link profile page to logged in user
+// TODO: [backend] leaderboard
+// TODO: [functionality] link leaderboard page
+// TODO: [functionality] link stats page to logged in user
+// TODO: [functionality] question page
 </script>
 
 <template>
@@ -33,5 +36,13 @@ body {
 
 .form-input {
   @apply w-80 rounded py-1 px-2 text-black;
+}
+
+.heading {
+  @apply text-2xl font-semibold;
+}
+
+.base-btn {
+  @apply w-40 bg-stone-700 h-8 rounded-lg;
 }
 </style>

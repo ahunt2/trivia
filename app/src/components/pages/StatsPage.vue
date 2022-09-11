@@ -14,7 +14,7 @@ const percentage = computed(() => {
 <template>
   <div class="display">
     <div class="mt-12">
-      <h1 class="text-2xl font-semibold">Stats</h1>
+      <h1 class="heading">Stats</h1>
     </div>
 
     <div class="grid grid-cols-3 gap-12 container">

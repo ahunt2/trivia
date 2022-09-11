@@ -9,7 +9,7 @@ async function loadNewQuestion() {
   let answers = data.incorrect_answers
   answers = [...answers, data.correct_answer]
 
-  answers = answers.forEach((answer) => decodeString(answer))
+  answers = answers.map((answer) => decodeString(answer))
   randomize(answers)
 }
 

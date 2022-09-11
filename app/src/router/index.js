@@ -13,7 +13,7 @@ const router = createRouter({
         },
         {
           path: '/profile',
-          component: () => import('../views/ProfileView.vue')
+          component: () => import('../components/pages/ProfilePage.vue')
         },
         {
           path: '/stats',

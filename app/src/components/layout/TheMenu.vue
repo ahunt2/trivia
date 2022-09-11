@@ -67,7 +67,7 @@ function switchView(view) {
 }
 
 .menu-item {
-  @apply text-center text-xl font-semibold cursor-pointer h-12 items-center py-12;
+  @apply text-center text-xl font-semibold cursor-pointer h-12 items-center py-8;
 }
 
 .item-group {
@@ -75,6 +75,6 @@ function switchView(view) {
 }
 
 .footer {
-  @apply pt-12;
+  @apply pt-8;
 }
 </style>
