@@ -28,10 +28,20 @@ exports.login = async (req, res, next) => {
   const { username, password } = req.body
 
   // Validate username and password
-  if (!username || !password) {
+  if (!username && !password) {
     return res.status(400).json({
       success: false,
       error: 'Please provide a username and password'
+    })
+  } else if (!username) {
+    return res.status(400).json({
+      success: false,
+      error: 'Please provide a username'
+    })
+  } else if (!password) {
+    return res.status(400).json({
+      success: false,
+      error: 'Please provide a username'
     })
   }
 

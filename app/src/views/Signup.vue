@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
+import { useDatabase } from '../../../api/helpers/database'
 import TriviaHeader from '../components/layout/TriviaHeader.vue'
 import axios from 'axios'
 
 const router = useRouter()
+const database = useDatabase()
 
 const username = ref('')
 const email = ref('')
@@ -14,17 +16,19 @@ const confirmPassword = ref('')
 async function submit() {
   if (!validate()) return
 
-  const result = await axios.post('http://localhost:3001/api/auth/register', {
-    username: username.value,
-    email: email.value,
-    password: password.value
-  })
+  const res = await database.register(username.value, email.value, password.value)
 
-  if (result) {
-    console.log(result)
-    $cookies.set('token', result.data.token)
-    router.push('/')
-  }
+  // const result = await axios.post('http://localhost:3001/api/auth/register', {
+  //   username: username.value,
+  //   email: email.value,
+  //   password: password.value
+  // })
+
+  // if (result) {
+  //   console.log(result)
+  //   $cookies.set('token', result.data.token)
+  //   router.push('/')
+  // }
 }
 
 function cancel() {

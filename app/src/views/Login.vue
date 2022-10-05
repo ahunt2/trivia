@@ -1,37 +1,46 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
+import { useDatabase } from '../../../api/helpers/database'
 import { useUserStore } from '../stores/users'
 import TriviaHeader from '../components/layout/TriviaHeader.vue'
 import axios from 'axios'
 
 const router = useRouter()
+const database = useDatabase()
 const userStore = useUserStore()
 const username = ref('')
 const password = ref('')
+const error = ref('')
 
 async function submit() {
   // TODO: set up validation
 
-  console.log(username.value)
-  console.log(password.value)
-
-  const res = await axios.post('http://localhost:3001/api/auth/login', {
-    username: username.value,
-    password: password.value
-  })
+  const res = await database.login(username.value, password.value)
 
   if (res && res.data.token) {
-    console.log('set token')
-    $cookies.set('token', res.data.token)
-    router.push('/')
-  }
-  
-  
-  // if ( res.error ) {
-  //   console.error(res.error)
-  // } else {
-  //   userStore.loadUser(res.body)
+      $cookies.set('token', res.data.token)
+      router.push('/')
+    }
+
+  // try {    
+  //   const res = await axios.post('http://localhost:5080/api/auth/login', {
+  //     username: username.value,
+  //     password: password.value
+  //   })
+    
+  //   console.log(res)
+    
+  //   if (res && res.data.token) {
+  //     $cookies.set('token', res.data.token)
+  //     router.push('/')
+  //   }
+    
+  //   if (res.data.error) {
+  //     error.value = res.data.error
+  //   }
+  // } catch (err) {
+  //   console.error(err)
   // }
 }
 
@@ -63,6 +72,10 @@ function cancel() {
           <div> 
             <input v-model="password" class="form-input" type="password" />
           </div>
+        </div>
+
+        <div v-if="error !== ''">
+          <h1 class="text-red-400">{{ error }}</h1>
         </div>
 
         <div class="space-y-2 space-x-6 text-center">
