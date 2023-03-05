@@ -1,14 +1,24 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { onMounted } from 'vue'
+import { useQuestionStore } from '../../stores/question'
+import { useSwipe } from '@vueuse/core'
 import Score from '../layout/Score.vue'
 import QuestionItem from './QuestionItem.vue'
 import AnswerList from '../answers/AnswerList.vue'
 import ButtonList from '../layout/ButtonList.vue'
-import { onMounted } from 'vue'
-import { useQuestionStore } from '../../stores/question'
 
 const questions = useQuestionStore()
 const selected = ref('')
+const isMobile = computed(() => window.innerWidth < 400)
+
+// const el = ref(null)
+// const { isSwiping, direction } = useSwipe(el)
+
+// watch([isSwiping], () => {
+//   console.log('isSwiping')
+//   console.log(direction.value)
+// })
 
 onMounted(() => {
   questions.loadNewQuestion()
@@ -59,7 +69,7 @@ function getNewQuestion() {
         <!-- <button-list @submit-answer="submitAnswer()" @new-question="questionStore.loadNewQuestion()"></button-list> -->
         <div class="btn-container">
             <button @click="submit()" :disabled="questions.answered" class="btn">Submit</button>
-            <button @click="getNewQuestion()" class="btn">New Question</button>
+            <button @click="getNewQuestion()" class="btn" v-if="!isMobile">New Question</button>
         </div>
       </div>
     </div>
@@ -67,9 +77,13 @@ function getNewQuestion() {
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
   .display {
     @apply absolute top-14 w-screen h-full;
+  }
+
+  .display.animated {
+    transition: all 0.2s ease-in-out;
   }
 
   .questions {

@@ -8,15 +8,6 @@ const UserSchema = mongoose.Schema({
     required: [true, 'Please enter a username'],
     unique: [true, 'Username taken'],
   },
-  email: {
-    type: String,
-    required: [true, 'Please enter an email'],
-    unique: [true, 'Email already in use'],
-    // match: [
-    //   '/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/',
-    //   'Please enter a valid email'
-    // ]
-  },
   password: {
     type: String,
     required: [true, 'Please add a password'],
@@ -27,16 +18,14 @@ const UserSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
-  totalCorrect: {
+  questionsAnswered: {
     type: Number,
     default: 0
   },
-  totalIncorrect: {
+  correctAnswers: {
     type: Number,
     default: 0
   },
-  // resetPasswordToken: String,
-  // resetPasswordExpire: Date,
   created: {
     type: Date,
     default: Date.now()

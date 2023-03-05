@@ -9,7 +9,7 @@ const router = createRouter({
       children: [
         {
           path: '',
-          component: () => import('../components/question/QuestionDisplay.vue')
+          component: () => import('../components/question/QuestionContainer.vue')
         },
         {
           path: '/profile',

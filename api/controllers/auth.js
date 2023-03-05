@@ -1,22 +1,33 @@
 const User = require('../models/User')
-const jwt = require('jsonwebtoken')
 
 /**
  * @desc    Register user
  * @route   POST /api/v1/auth/register
  * @access  Public
  */
-exports.register = async (req, res, next) => {
-  const { username, email, password } = req.body
+exports.register = async (req, res) => {
+  try {
+    const { username, password } = req.body
 
-  // Create user
-  const user = await User.create({
-    username,
-    email,
-    password
-  })
+    let user
 
-  sendTokenResponse(user, 200, res)
+    user = await User.findOne({ username })
+
+    if (user) {
+      return res.status(400).json({ error: true, message: 'Username taken' })
+    }
+  
+    // Create user
+    user = await User.create({
+      username,
+      email,
+      password
+    })
+  
+    sendTokenResponse(user, 200, res)
+  } catch (error) {
+    return res.status(400).json({ error: true, message: 'Error creating user' })
+  }
 }
 
 /**
@@ -24,48 +35,52 @@ exports.register = async (req, res, next) => {
  * @route   POST /api/v1/auth/login
  * @access  Public
  */
-exports.login = async (req, res, next) => {
-  const { username, password } = req.body
-
-  // Validate username and password
-  if (!username && !password) {
-    return res.status(400).json({
-      success: false,
-      error: 'Please provide a username and password'
-    })
-  } else if (!username) {
-    return res.status(400).json({
-      success: false,
-      error: 'Please provide a username'
-    })
-  } else if (!password) {
-    return res.status(400).json({
-      success: false,
-      error: 'Please provide a username'
-    })
+exports.login = async (req, res) => {
+  try {
+    const { username, password } = req.body
+    
+    // Validate username and password
+    if (!password && !username) {
+      return res.status(400).json({
+        error: true,
+        message: 'Please provide a username and password'
+      })
+    } else if (!username) {
+      return res.status(400).json({
+        error: true,
+        message: 'Please provide a username'
+      })
+    } else if (!password) {
+      return res.status(400).json({
+        error: true,
+        message: 'Please provide a username'
+      })
+    }
+    
+    // Check for user
+    const user = await User.findOne({ username }).select('+password')
+    
+    if (!user) {
+      return res.status(401).json({
+        error: true,
+        message: 'Invalid Credentials'
+      })
+    }
+    
+    // Check if password matches
+    const isMatch = await user.matchPassword(password)
+    
+    if (!isMatch) {
+      return res.status(401).json({
+        error: true,
+        message: 'Invalid Credentials'
+      })
+    }
+    
+    sendTokenResponse(user, 200, res)
+  } catch (error) {
+    return res.status(400).json({ error: true, message: 'Login Error'})
   }
-
-  // Check for user
-  const user = await User.findOne({ username }).select('+password')
-
-  if (!user) {
-    return res.status(401).json({
-      success: false,
-      error: 'Invalid Credentials'
-    })
-  }
-
-  // Check if password matches
-  const isMatch = await user.matchPassword(password)
-
-  if (!isMatch) {
-    return res.status(401).json({
-      success: false,
-      error: 'Invalid Credentials'
-    })
-  }
-
-  sendTokenResponse(user, 200, res)
 }
 
 /**
@@ -73,13 +88,32 @@ exports.login = async (req, res, next) => {
  * @route   POST /api/auth/me
  * @access  Private
  */
-exports.getMe = async (req, res, next) => {
-  const user = await User.findById(req.user.id)
+exports.getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id)
+  
+    res.status(200).json({
+      success: true,
+      data: user
+    })
+  } catch (error) {
+    res.status(401).json({ error: 'Unauthorized' })
+  }
+}
 
-  res.status(200).json({
-    success: true,
-    data: user
-  })
+exports.updateUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.user.id, req.body, {
+      new: true,
+      runValidators: true
+    })
+  
+    res.status(200).json({
+      error: false
+    })
+  } catch (error) {
+    res.status(400).json({ error: true, message: 'Error updating password' })
+  }
 }
 
 // Get token from model, create cookie and send response

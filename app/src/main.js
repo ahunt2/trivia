@@ -6,6 +6,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueCookies from 'vue-cookies'
 import FloatingVue from 'floating-vue'
+import VueMobileDetection from 'vue-mobile-detection'
 
 library.add(fas)
 library.add(far)
@@ -21,6 +22,7 @@ app.use(createPinia())
 app.use(VueCookies, { expire: '1d' })
 app.use(router)
 app.use(FloatingVue)
+app.use(VueMobileDetection)
 app.component('font-awesome-icon', FontAwesomeIcon)
 
 app.mount('#app')
