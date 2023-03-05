@@ -91,13 +91,21 @@ exports.login = async (req, res) => {
 exports.getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user._id)
-  
-    res.status(200).json({
-      success: true,
-      data: user
-    })
+    res.status(200).json(user)
   } catch (error) {
     res.status(401).json({ error: 'Unauthorized' })
+  }
+}
+
+/**
+ * Check to determine if user is authenticated
+ */
+exports.isAuthenticated = async (req, res) => {
+  try {
+    await User.findById(req.user._id)
+    res.status(200).send(true)
+  } catch(error) {
+    res.status(401).send(false)
   }
 }
 
@@ -133,8 +141,5 @@ const sendTokenResponse = (user, statusCode, res) => {
   res
     .status(statusCode)
     .cookie('token', token, options)
-    .json({
-      success: true,
-      token
-    })
+    .json(token)
 }

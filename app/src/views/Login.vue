@@ -1,47 +1,30 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
-import { useDatabase } from '../../../api/helpers/database'
-import { useUserStore } from '../stores/users'
+import { useDatabase } from '../composition/useDatabase'
 import TriviaHeader from '../components/layout/TriviaHeader.vue'
-import axios from 'axios'
 
-const router = useRouter()
 const database = useDatabase()
-const userStore = useUserStore()
-const username = ref('')
-const password = ref('')
-const error = ref('')
+const router = useRouter()
+
+const username = reactive({
+  value: '',
+  error: false,
+  message: ''
+})
+const password = reactive({
+  value: '',
+  error: false,
+  message: ''
+})
 
 async function submit() {
-  // TODO: set up validation
+  const { error } = await database.login({ 
+    username: username.value, 
+    password: password.value 
+  })
 
-  const res = await database.login(username.value, password.value)
-
-  if (res && res.data.token) {
-      $cookies.set('token', res.data.token)
-      router.push('/')
-    }
-
-  // try {    
-  //   const res = await axios.post('http://localhost:5080/api/auth/login', {
-  //     username: username.value,
-  //     password: password.value
-  //   })
-    
-  //   console.log(res)
-    
-  //   if (res && res.data.token) {
-  //     $cookies.set('token', res.data.token)
-  //     router.push('/')
-  //   }
-    
-  //   if (res.data.error) {
-  //     error.value = res.data.error
-  //   }
-  // } catch (err) {
-  //   console.error(err)
-  // }
+  if (!error) router.push('/')
 }
 
 function cancel() {
@@ -61,7 +44,7 @@ function cancel() {
             <h2>USERNAME</h2>
           </div>
           <div> 
-            <input v-model="username" class="form-input" type="text" placeholder="Enter username..." />
+            <input v-model="username.value" class="form-input" type="text" placeholder="Enter username..." />
           </div>
         </div>
 
@@ -70,20 +53,17 @@ function cancel() {
             <h2>PASSWORD</h2>
           </div>
           <div> 
-            <input v-model="password" class="form-input" type="password" />
+            <input v-model="password.value" class="form-input" type="password" />
           </div>
         </div>
 
-        <div v-if="error !== ''">
+        <!-- <div v-if="error !== ''">
           <h1 class="text-red-400">{{ error }}</h1>
-        </div>
+        </div> -->
 
         <div class="space-y-2 space-x-6 text-center">
-          <button class="form-btn" type="button" @click="submit()">Submit</button>
-          <button class="form-btn" type="button" @click="cancel()">Cancel</button>
-        </div>
-        <div class="container text-center"> 
-          <h2>Don't have an account? Signup <router-link to="/signup" class="text-sky-400">here</router-link>.</h2>
+          <button class="form-btn" type="button" @click="submit">Submit</button>
+          <button class="form-btn" type="button" @click="cancel">Cancel</button>
         </div>
       </div>
     </div>
