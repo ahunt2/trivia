@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const host = 'localhost:5080'
+
 export const useDatabase = () => {
   const protect = axios.create()
   protect.interceptors.request.use((config) => {
@@ -47,10 +49,21 @@ export const useDatabase = () => {
     }
   }
 
+  async function updateUser(user) {
+    try {
+      const user = await protect.put(`http://${host}/api/auth/update`, user)
+      // TODO: update user in store
+      return {}
+    } catch (error) {
+      return { error: true }
+    }
+  }
+
   return {
     login,
     getMe,
-    isAuthenticated
+    isAuthenticated,
+    updateUser
   }
 }
 

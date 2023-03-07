@@ -1,14 +1,10 @@
 <script setup>
+
+// TODO: modal for updating username or password
 function changeUsername() {
-
-}
-
-function changeEmail() {
-
 }
 
 function changePassword() {
-  
 }
 </script>
 
@@ -21,21 +17,10 @@ function changePassword() {
         <h1 class="w-24">Username</h1>
         <h1>temp-username</h1>
       </div>
-      
-      <div class="profile-item">
-        <h1 class="w-24">Email</h1>
-        <h1>temp@email.com</h1>
-      </div>
 
       <div class="text-center">
         <button class="base-btn" @click="changeUsername">
           Change username
-        </button>
-      </div>
-      
-      <div class="text-center">
-        <button class="base-btn" @click="changeEmail">
-          Change email
         </button>
       </div>
       
@@ -60,5 +45,9 @@ function changePassword() {
 
 .profile-item {
   @apply flex space-x-12 text-right;
+}
+
+h1 {
+  @apply font-semibold;
 }
 </style>

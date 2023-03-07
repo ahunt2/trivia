@@ -7,14 +7,14 @@ const router = useRouter()
 const emit = defineEmits(['toggle-menu'])
 
 function switchView(view) {
-  if (view === '/signout') {
-    $cookies.remove('token')
-    router.push('/login')
-  } else {
-    router.push(view)
-  }
-  
+  router.push(view)
   emit('toggle-menu')
+}
+  
+function signout() {
+  router.push('/login')
+  emit('toggle-menu')
+  sessionStorage.clear()
 }
 </script>
 
@@ -48,7 +48,7 @@ function switchView(view) {
     </div>
    </div>
    <divider />
-   <div class="menu-item" @click="switchView('/signout')">
+   <div class="menu-item" @click="signout">
     <div class="item-group">
       <font-awesome-icon icon="fa-solid fa-right-from-bracket" class="w-12" />
       <h1>Signout</h1>

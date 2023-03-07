@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import LeaderboardItem from './LeaderboardItem.vue'
 
-const items = ref(['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'])
+const items = ref(['one', 'two', 'three', 'four', 'five'])
 </script>
 
 <template>

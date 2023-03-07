@@ -70,13 +70,17 @@ function cancel() {
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
   .form {
     @apply absolute top-14 text-center;
   }
 
   .form-group {
     @apply space-y-2 container text-left pl-6;
+  }
+
+  .form-btn:active {
+    @apply bg-sky-400 text-black;
   }
 
   .display {

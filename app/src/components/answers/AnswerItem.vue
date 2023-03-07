@@ -5,29 +5,26 @@ import { useQuestionStore } from '../../stores/question'
 const questions = useQuestionStore()
 const props = defineProps(['id', 'text'])
 const emit = defineEmits(['select-answer'])
+
 const style = computed(() => {
-  if (questions.answered &&
-  (questions.selected === questions.correct) &&
-  (questions.correct === props.text)) return 'correct'
-
-  else if (questions.anwered &&
-  (questions.selected !== questions.correct) &&
-  (questions.selected === props.text)) return 'incorrect'
-
-  return '' 
+  if (questions.answered && (questions.correct === props.id)) return 'bg-green-600 font-semibold'
+  else if (questions.answered && (props.id === questions.selected)) return 'bg-red-600 font-semibold'
+  else if (questions.selected === props.id) return 'bg-sky-400 text-gray-800 font-semibold'
+  return ''
 })
 
 function selectAnswer() {
-  console.log(`selected: ${props.text}`)
-  emit('select-answer', props.text)
+  // console.log(`selected: ${props.text}`)
+  questions.setSelected(props.id)
+  // emit('select-answer', props.text)
 }
 
 // TODO: style answer buttons similar to submit and new question buttons
 </script>
 
 <template>
-<div>
-  <button @click="selectAnswer()" :disabled="questions.answered" :class="style">
+<div :class="style">
+  <button @click="selectAnswer()" :disabled="questions.answered">
     <h2>{{ props.text }}</h2>
   </button>
 </div>
@@ -36,13 +33,5 @@ function selectAnswer() {
 <style scoped>
 h2 {
   @apply text-sm;
-}
-
-.correct {
-  @apply bg-green-700;
-}
-
-.incorrect {
-  @apply bg-red-700;
 }
 </style>
