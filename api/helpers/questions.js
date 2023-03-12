@@ -31,5 +31,6 @@ function decodeString(str) {
   str = str.replaceAll('&gt;', '>')
   str = str.replaceAll('&lsquo;', "'")
   str = str.replaceAll('&rsquo;', "'")
+  str = str.replaceAll('&ouml;', 'o')
   return str
 }

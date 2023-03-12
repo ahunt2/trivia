@@ -1,14 +1,18 @@
 <script setup>
+import { onBeforeMount, onMounted } from 'vue'
 import { RouterView } from 'vue-router'
+import { useLeaderboard } from './stores/leaderboard'
+import io from './services/socketio.services'
 
-// TODO: check answer
-// TODO: submit answer -> disable submit button
-// TODO: [styles] right/wrong answer
-// TODO: [functionality] link profile page to logged in user
-// TODO: [backend] leaderboard
-// TODO: [functionality] link leaderboard page
-// TODO: [functionality] link stats page to logged in user
-// TODO: [functionality] question page
+const leaderboard = useLeaderboard()
+
+onBeforeMount(() => {
+  io.setupSocketConnection()
+})
+
+onMounted(() => {
+  io.socket.on('update-leaderboard', (data) => leaderboard.updateLeaderboard(data))
+})
 </script>
 
 <template>
@@ -17,7 +21,7 @@ import { RouterView } from 'vue-router'
   </div>
 </template>
 
-<style lang="postcss">
+<style>
 body {
   @apply overflow-hidden overscroll-none;
 }

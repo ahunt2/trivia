@@ -18,6 +18,7 @@
     "floating-vue": "^2.0.0-beta.19",
     "jsonwebtoken": "^8.5.1",
     "pinia": "^2.0.16",
+    "socket.io-client": "^4.6.1",
     "url": "^0.11.0",
     "vue": "^3.2.37",
     "vue-context": "^6.0.0",

@@ -1,48 +1,59 @@
 import { defineStore } from 'pinia'
+import { useDatabase } from '../composition/useDatabase'
+import io from '../services/socketio.services'
 
 export const useUserStore = defineStore({
   id: 'users',
   state: () => ({
-    isAuthenticated: false,
     id: '',
     username: '',
     score: 0,
-    totalCorrect: 0,
-    totalIncorrect: 0
+    questionsAnswered: 0,
+    correctAnswers: 0
   }),
-  getters: {
-    totalGuesses(state) {
-      return state.totalCorrect + state.totalIncorrect
-    }
-  },
   actions: {
-    setAuthentication(value) {
-      this.isAuthenticated = value
-    },
-
-    incrementScore(value) {
+    incrementScore(difficulty) {
+      this.incrementCorrect()
+      const value = difficulty * 10
       this.score += value
     },
 
     incrementCorrect() {
-      this.totalCorrect++
+      this.correctAnswers++
     },
 
-    incrementIncorrect() {
-      this.totalIncorrect++
+    incrementAnswered() {
+      this.questionsAnswered++
     },
 
-    loadUser(user) {
-      this.isAuthenticated = true
-      this.id = user.id
+    setUser(user) {
+      this.id = user._id
       this.username = user.username
       this.score = user.score
-      this.totalCorrect = user.totalCorrect
-      this.totalIncorrect = user.totalIncorrect
+      this.questionsAnswered = user.questionsAnswered
+      this.correctAnswers = user.correctAnswers
     },
 
-    signout() {
-      $cookies.remove('token')
+    updateUser() {
+      const db = useDatabase()
+      db.updateUser(this.user)
+    },
+
+    updateScore(update) {
+      // const db = useDatabase()
+      // db.updateScore(update)
+      io.socket.emit('update-user', update)
+    }
+  },
+  getters: {
+    user: (state) => {
+      return {
+        id: state.id,
+        username: state.username,
+        score: state.score,
+        questionsAnswered: state.questionsAnswered,
+        correctAnswers: state.correctAnswers
+      }
     }
   }
 })

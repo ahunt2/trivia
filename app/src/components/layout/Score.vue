@@ -3,21 +3,8 @@ import { ref, computed } from 'vue'
 import { useUserStore } from '../../stores/users'
 
 const userStore = useUserStore()
-// const score = computed(() => userStore.score)
-const score = ref(0)
+const score = computed(() => userStore.score)
 const fadeIn = ref(true)
-
-function incrementScore() {
-  scoreChange()
-}
-
-function scoreChange() {
-  fadeIn.value = false
-  setTimeout(() => {
-    score.value += 300
-    fadeIn.value = true
-  }, 500)
-}
 </script>
 
 <template>

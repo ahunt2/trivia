@@ -2,10 +2,12 @@
 import { ref, reactive } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useDatabase } from '../composition/useDatabase'
+import { useUserStore } from '../stores/users'
 import TriviaHeader from '../components/layout/TriviaHeader.vue'
 
 const database = useDatabase()
 const router = useRouter()
+const userStore = useUserStore()
 
 const username = reactive({
   value: '',
@@ -24,7 +26,11 @@ async function submit() {
     password: password.value 
   })
 
-  if (!error) router.push('/')
+  if (!error) {
+    const user = await database.getMe()
+    userStore.setUser(user)
+    router.push('/')
+  } 
 }
 
 function cancel() {

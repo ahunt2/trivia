@@ -20,9 +20,8 @@ export const useQuestionStore = defineStore({
       this.isLoading = true
       this.reset()
       const res = await axios.get('https://opentdb.com/api.php?amount=1&type=multiple')
-      const [data] = res.data.results
 
-      console.log(data)
+      const [data] = res.data.results
 
       this.question = decodeString(data.question)
       this.setAnswers(data)
@@ -63,20 +62,34 @@ export const useQuestionStore = defineStore({
       this.correct = index
     },
 
-    async incrementScore() {
-      const user = useUserStore
-      const value = this.difficulty * 10
-
-      user.incrementScore(value)
-      user.incrementCorrect()
-    },
-
     setAnswered(value) {
       this.answered = value
     },
 
     setSelected(index) {
       this.selected = index
+    },
+
+    submit() {
+      if (this.answered === true || this.selected === undefined) return
+      
+      this.setAnswered(true)
+      const userStore = useUserStore()
+      userStore.incrementAnswered()
+
+      const update = {
+        questionsAnswered: 1,
+        correctAnswers: 0,
+        score: 0
+      }
+
+      if (this.selected === this.correct) {
+        update.correctAnswers = 1
+        update.score = this.difficulty * 10
+        userStore.incrementScore(this.difficulty)
+      } 
+
+      userStore.updateScore(update)
     }
   }
 })

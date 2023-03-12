@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useUserStore } from '../stores/users'
 
 const host = 'localhost:5080'
 
@@ -19,8 +20,13 @@ export const useDatabase = () => {
    */
   async function login(user) {
     try {
-      const result = await axios.post('http://localhost:5080/api/auth/login', user)
+      const result = await axios.post(`http://${host}/api/auth/login`, user)
       sessionStorage.setItem('access_token', result.data)
+
+      // const userStore = useUserStore()
+      // const user = await getMe()
+      // userStore.setUser(user)
+
       return { error: false }
     } catch (error) {
       return { error: true }
@@ -33,7 +39,7 @@ export const useDatabase = () => {
    */
   async function getMe() {
     try {
-      const res = await protect.get('http://localhost:5080/api/auth/me')
+      const res = await protect.get(`http://${host}/api/auth/me`)
       return res.data
     } catch (error) {
       return { error: true, message: 'Unauthorized'}
@@ -42,18 +48,30 @@ export const useDatabase = () => {
 
   async function isAuthenticated() {
     try {
-      await protect.get('http://localhost:5080/api/auth/authenticated')
+      await protect.get(`http://${host}/api/auth/authenticated`)
       return true
     } catch (error) {
       return false
     }
   }
 
-  async function updateUser(user) {
+  async function updateUser(updated) {
     try {
-      const user = await protect.put(`http://${host}/api/auth/update`, user)
-      // TODO: update user in store
+      const result = await protect.put(`http://${host}/api/auth/update`, updated)
+      const userStore = useUserStore()
+      userStore.setUser(result.data)
       return {}
+    } catch (error) {
+      return { error: true }
+    }
+  }
+
+  async function updateScore(update) {
+    try {
+      await protect.put(`http://${host}/api/scores`, update)
+      const user = await getMe()
+      const userStore = useUserStore()
+      userStore.setUser(user)
     } catch (error) {
       return { error: true }
     }
@@ -63,7 +81,8 @@ export const useDatabase = () => {
     login,
     getMe,
     isAuthenticated,
-    updateUser
+    updateUser,
+    updateScore
   }
 }
 

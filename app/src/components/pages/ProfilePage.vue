@@ -1,4 +1,17 @@
 <script setup>
+import { onMounted, computed } from 'vue'
+import { useUserStore } from '../../stores/users'
+import { useDatabase } from '../../composition/useDatabase'
+
+const userStore = useUserStore()
+const user = computed(() => userStore.user)
+const username = computed(() => user.value.username)
+
+onMounted(async () => {
+  const db = useDatabase()
+  const user = await db.getMe()
+  userStore.setUser(user)
+})
 
 // TODO: modal for updating username or password
 function changeUsername() {
@@ -15,7 +28,7 @@ function changePassword() {
     <div class="profile-body">
       <div class="profile-item">
         <h1 class="w-24">Username</h1>
-        <h1>temp-username</h1>
+        <h1>{{ username }}</h1>
       </div>
 
       <div class="text-center">

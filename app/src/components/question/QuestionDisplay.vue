@@ -20,14 +20,7 @@ onMounted(() => {
 function submit() {
   if (questions.selected === undefined) return
 
-  questions.setAnswered(true)
-
-  // TODO: take out after testing is done
-  if (selected.value === questions.correct) {
-    console.log('correct')
-  } else {
-    console.log('incorrect')
-  }
+  questions.submit()
 }
 
 function getNewQuestion() {
