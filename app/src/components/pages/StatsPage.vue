@@ -1,12 +1,15 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
+import { useUserStore } from '../../stores/users'
 
-const totalQuestions = ref(0)
-const correct = ref(0)
-const incorrect = ref(0)
+const user = useUserStore()
+
+const totalQuestions = computed(() => user.questionsAnswered)
+const correct = computed(() => user.correctAnswers)
+const incorrect = computed(() => totalQuestions.value - correct.value)
 const percentage = computed(() => {
   if (totalQuestions.value === 0) return 0
-  return (correct/totalQuestions).toFixed(2)
+  return (correct.value/totalQuestions.value).toFixed(2)
 })
 
 </script>

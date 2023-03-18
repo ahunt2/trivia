@@ -3,15 +3,20 @@ import { onBeforeMount, onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useLeaderboard } from './stores/leaderboard'
 import io from './services/socketio.services'
+import { useUserStore } from './stores/users'
 
 const leaderboard = useLeaderboard()
+const users = useUserStore()
 
 onBeforeMount(() => {
   io.setupSocketConnection()
 })
 
 onMounted(() => {
-  io.socket.on('update-leaderboard', (data) => leaderboard.updateLeaderboard(data))
+  io.socket.on('update-leaderboard', (data) => {
+    leaderboard.updateLeaderboard(data)
+  })
+  io.socket.on('update-user', (data) => users.update(data))
 })
 </script>
 

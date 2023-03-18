@@ -7,8 +7,7 @@ export const useLeaderboard = defineStore({
   }),
   actions: {
     updateLeaderboard(scores) {
-      // this.rank = scores
-      console.log('update leaderboard')
+      this.rank = scores
     }
   }
 })

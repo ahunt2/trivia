@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const jwt = require('jsonwebtoken')
 
 exports.updateScore = async (req, res) => {
   try {
@@ -15,14 +16,39 @@ exports.updateScore = async (req, res) => {
   }
 }
 
-exports.getLeaders = async (req, res) => {
-  try {
-    const users = await User.find({})
-
-    console.log(users)
-    res.status(200).json(users)
-  } catch (error) {
-    console.error('Could not get users')
-    res.status(400).json({ error: true })
+exports.updateScores = async (data, token, socket) => {
+  if (!token) {
+    console.error('Not authorized')
+    return
   }
+
+  // decode token
+  const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+  if (!decoded || !decoded.id) {
+    console.error('Not authorized')
+    return
+  }
+
+  // get user from decoded token
+  const user = await User.findByIdAndUpdate(decoded.id, { $inc: data }, { new: true })
+
+  socket.emit('update-user', user)
+  return await getLeaders(socket)
 }
+
+const getLeaders = async () => {
+  const users = await User.find({})
+
+  const data = users.map((user) => {
+    return {
+      username: user.username,
+      score: user.score
+    }
+  })
+
+  data.sort((a, b) => b.score - a.score)
+  return data
+}
+
+exports.getLeaders = getLeaders

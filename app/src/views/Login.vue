@@ -1,8 +1,9 @@
 <script setup>
-import { ref, reactive } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { useDatabase } from '../composition/useDatabase'
 import { useUserStore } from '../stores/users'
+import io from '../services/socketio.services'
 import TriviaHeader from '../components/layout/TriviaHeader.vue'
 
 const database = useDatabase()
@@ -29,6 +30,7 @@ async function submit() {
   if (!error) {
     const user = await database.getMe()
     userStore.setUser(user)
+    io.socket.emit('get-leaderboard')
     router.push('/')
   } 
 }

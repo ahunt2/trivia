@@ -26,15 +26,20 @@ if (process.env.NODE_ENV === 'development') {
 // api router
 app.use('/api', router)
 
-io.on('connection', (socket) => {
-  console.log('a user connected')
+const { updateScores, getLeaders } = require('./controllers/scores')
 
-  socket.on('update-user', (data) => {
-    console.log('update user')
-    console.log(data)
+io.on('connection', (socket) => {
+  socket.on('update-user', async (data, token) => {
+    const scores = await updateScores(data, token, socket)
+    io.emit('update-leaderboard', scores)
+  })
+
+  socket.on('get-leaderboard', async () => {
+    const scores = await getLeaders()
+    io.emit('update-leaderboard', scores)
   })
 })
 
 http.listen(process.env.PORT, () => {
-  console.log(`Server listening on port ${process.env.PORT}`)
+  console.debug(`Server listening on port ${process.env.PORT}`.blue)
 })

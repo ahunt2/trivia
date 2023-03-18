@@ -20,12 +20,12 @@ exports.register = async (req, res) => {
     // Create user
     user = await User.create({
       username,
-      email,
       password
     })
   
     sendTokenResponse(user, 200, res)
   } catch (error) {
+    console.error(error.message)
     return res.status(400).json({ error: true, message: 'Error creating user' })
   }
 }

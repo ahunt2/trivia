@@ -11,7 +11,6 @@ export async function getQuestion() {
   answers = [...answers, data.correct_answer]
 
   answers = answers.map((answer) => decodeString(answer))
-  console.log(answers)
   randomize(answers)
 }
 
@@ -23,14 +22,17 @@ function randomize(array) {
 }
 
 function decodeString(str) {
-  str = str.replaceAll('&quot;', '"')
-  str = str.replaceAll('&#039;', "'")
-  str = str.replaceAll('&eacute;', 'e')
-  str = str.replaceAll('&amp;', '&')
-  str = str.replaceAll('&lt;', '<')
-  str = str.replaceAll('&gt;', '>')
-  str = str.replaceAll('&lsquo;', "'")
-  str = str.replaceAll('&rsquo;', "'")
-  str = str.replaceAll('&ouml;', 'o')
+  str = str.replaceAll(/&quot/, /"/)
+  str = str.replaceAll(/&#039;/, /'/)
+  str = str.replaceAll(/&eacute;/, /e/)
+  str = str.replaceAll(/&amp;/, /&/)
+  str = str.replaceAll(/&lt;/, /</)
+  str = str.replaceAll(/&gt;/, />/)
+  str = str.replaceAll(/&lsquo;/, /'/)
+  str = str.replaceAll(/&rsquo;/, /'/)
+  str = str.replaceAll(/&ouml;/, /o/)
+  str = str.replaceAll(/&iacute;/, /i/)
+  str = str.replaceAll(/&uuml;/, /u/)
+  str = str.replaceAll(/&Uuml;/, /U/)
   return str
 }

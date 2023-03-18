@@ -34,15 +34,21 @@ export const useUserStore = defineStore({
       this.correctAnswers = user.correctAnswers
     },
 
+    update(user) {
+      const { score, questionsAnswered, correctAnswers } = user
+      this.score = score
+      this.questionsAnswered = questionsAnswered
+      this.correctAnswers = correctAnswers
+    },
+
     updateUser() {
       const db = useDatabase()
       db.updateUser(this.user)
     },
 
     updateScore(update) {
-      // const db = useDatabase()
-      // db.updateScore(update)
-      io.socket.emit('update-user', update)
+      const token = sessionStorage.getItem('access_token')
+      io.socket.emit('update-user', update, token)
     }
   },
   getters: {

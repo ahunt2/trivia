@@ -12,13 +12,6 @@ onMounted(async () => {
   const user = await db.getMe()
   userStore.setUser(user)
 })
-
-// TODO: modal for updating username or password
-function changeUsername() {
-}
-
-function changePassword() {
-}
 </script>
 
 <template>
@@ -31,7 +24,11 @@ function changePassword() {
         <h1>{{ username }}</h1>
       </div>
 
-      <div class="text-center">
+      <div>
+        <p>Custom usernames and passwords coming soon... maybe...</p>
+      </div>
+
+      <!-- <div class="text-center">
         <button class="base-btn" @click="changeUsername">
           Change username
         </button>
@@ -41,7 +38,7 @@ function changePassword() {
         <button class="base-btn" @click="changePassword">
           Change password
         </button>
-      </div>
+      </div> -->
     </div>
   </div>
     

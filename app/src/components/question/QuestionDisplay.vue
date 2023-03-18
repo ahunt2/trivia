@@ -5,13 +5,9 @@ import { useQuestionStore } from '../../stores/question'
 import Score from '../layout/Score.vue'
 import QuestionItem from './QuestionItem.vue'
 import AnswerList from '../answers/AnswerList.vue'
-import ButtonList from '../layout/ButtonList.vue'
 
 const questions = useQuestionStore()
-const selected = ref('')
 const loading = computed(() => questions.isLoading)
-const isAnswered = computed(() => questions.answered)
-// const isMobile = computed(() => window.innerWidth < 400)
 
 onMounted(() => {
   questions.loadNewQuestion()
@@ -44,16 +40,13 @@ function getNewQuestion() {
       </div>
 
       <div class="container text-center">
-        <!-- <button-list @submit-answer="submitAnswer()" @new-question="questionStore.loadNewQuestion()"></button-list> -->
         <div class="btn-container">
             <button @click="submit" :disabled="questions.answered" class="btn">Submit</button>
             <button @click="getNewQuestion" class="btn">New Question</button>
-            <!-- <button @click="getNewQuestion" class="btn" v-if="!isMobile">New Question</button> -->
         </div>
       </div>
     </div>
     <div v-else class="spinner">
-      <!-- <font-awesome-icon icon="fa-solid fa-spinner" :spin="true" /> -->
       <font-awesome-icon icon="fa-solid fa-circle-notch" :spin="true" />
     </div>
 

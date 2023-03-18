@@ -14,12 +14,8 @@ const style = computed(() => {
 })
 
 function selectAnswer() {
-  // console.log(`selected: ${props.text}`)
   questions.setSelected(props.id)
-  // emit('select-answer', props.text)
 }
-
-// TODO: style answer buttons similar to submit and new question buttons
 </script>
 
 <template>
